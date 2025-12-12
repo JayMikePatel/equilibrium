@@ -1,0 +1,67 @@
+// schema.prisma
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Product {
+  // 1. Core Identifiers
+  id          String   @id @default(uuid())
+  sku         String?  // Not all vintage items have SKUs, so nullable
+  name        String
+  brand       String?
+  model       String?
+  
+  // 2. Specifics
+  size        String?  // String allows "10.5" (Shoes) and "L" (Apparel)
+  category    Category
+  condition   Condition
+  notes       String?  // Any specific details about flaws, box condition, etc.
+
+  // 3. Market Data (StockX/Goat Scraped Data)
+  lastSalePrice     Decimal?  @db.Decimal(10, 2)
+  lowestAsk         Decimal?  @db.Decimal(10, 2)
+  highestBid        Decimal?  @db.Decimal(10, 2)
+  marketDataUpdated DateTime? // To know if data is stale
+
+  // 4. Your Inventory Status & Pricing
+  listedPrice   Decimal?  @db.Decimal(10, 2)
+  purchasePrice Decimal?  @db.Decimal(10, 2) // Added based on your earlier request for "cost"
+  status        Status    @default(UNLISTED)
+
+  // 5. Dates
+  purchaseDate  DateTime?
+  dateAdded     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+}
+
+// --------------------------------------
+// Enums
+// --------------------------------------
+
+enum Category {
+  SHOE
+  APPAREL
+  VINYL
+  SPORTS_CARD
+  OTHER
+}
+
+enum Condition {
+  NEW
+  USED
+}
+
+enum Status {
+  UNLISTED
+  LISTED
+  SOLD          // Item sold, waiting for next steps
+  PRINT_LABEL   // Workflow step: You need to generate the label
+  SHIP          // Label printed, ready to be dropped off
+  SHIPPED       // Dropped off at carrier
+}

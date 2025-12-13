@@ -13,3 +13,32 @@ body {
     color-scheme: dark;
   }
 }
+
+/* Navbar */
+.navbar {
+  @apply flex items-center justify-between px-6 py-4 border-b border-gray-200 dark:border-gray-800;
+}
+
+.navbar-brand a {
+  @apply text-xl font-semibold text-gray-900 dark:text-white no-underline;
+}
+
+.navbar-actions {
+  @apply flex items-center gap-4;
+}
+
+.settings-link {
+  @apply text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white transition-colors;
+}
+
+.settings-page {
+  @apply p-6 max-w-2xl mx-auto;
+}
+
+.settings-page h1 {
+  @apply text-2xl font-bold text-gray-900 dark:text-white mb-4;
+}
+
+.settings-page p {
+  @apply text-gray-600 dark:text-gray-400;
+}

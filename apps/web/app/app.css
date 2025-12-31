@@ -42,3 +42,15 @@ body {
 .settings-page p {
   @apply text-gray-600 dark:text-gray-400;
 }
+
+.settings-section {
+  @apply mt-8;
+}
+
+.settings-section h2 {
+  @apply text-lg font-semibold text-gray-900 dark:text-white mb-4;
+}
+
+.stockx-login-btn {
+  @apply px-6 py-3 bg-green-600 hover:bg-green-700 text-white font-semibold rounded-lg transition-colors cursor-pointer;
+}
